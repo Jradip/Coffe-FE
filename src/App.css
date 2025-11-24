@@ -1,0 +1,238 @@
+/* ===== WRAPPER APLIKASI ===== */
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 12px 0;
+}
+
+/* ===== FRAME HP ===== */
+.phone-shell {
+  width: 100%;
+  max-width: 430px;
+  background: #f9fafb;
+  border-radius: 24px;
+  padding: 16px 18px 0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 24px); /* tinggi kira-kira penuh layar */
+  overflow: hidden;
+}
+
+/* ===== HEADER TOKO ===== */
+.home-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.brand-underline {
+  width: 80px;
+  height: 3px;
+  border-radius: 999px;
+  background: #fb7185; /* pink garis */
+}
+
+/* ===== SEARCH BAR ===== */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.search-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.search-icon {
+  font-size: 16px;
+  margin-right: 6px;
+  color: #9ca3af;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  background: transparent;
+}
+
+.filter-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: #111827;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ===== KONTEN (SCROLL AREA) ===== */
+.content {
+  margin-top: 6px;
+  padding-bottom: 16px;
+  flex: 1; /* ambil ruang sisa */
+  overflow-y: auto;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0 12px;
+}
+
+/* ===== GRID PRODUK ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.product-card {
+  padding: 10px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-image {
+  width: 100%;
+  border-radius: 12px;
+  background: #fef3c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+  overflow: hidden;
+}
+
+.product-img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-info {
+  margin-top: 4px;
+}
+
+.product-name {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.product-desc {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.product-footer {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-price {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.add-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: none;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ===== BOTTOM NAV (DI DALAM PHONE) ===== */
+.bottom-nav {
+  margin-top: auto; /* dorong ke bawah phone-shell */
+  background: #ffffff;
+  padding: 8px 24px 10px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.1);
+}
+
+.nav-item {
+  flex: 1;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.nav-icon {
+  font-size: 20px;
+}
+
+.nav-item.active {
+  color: #111827;
+}
