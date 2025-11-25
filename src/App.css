@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: stretch;
   padding: 12px 0;
+  background: #f0f2f5;
 }
 
 /* ===== FRAME HP ===== */
@@ -15,10 +16,9 @@
   border-radius: 24px;
   padding: 16px 18px 0;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 24px); /* tinggi kira-kira penuh layar */
+  min-height: calc(100vh - 24px);
   overflow: hidden;
 }
 
@@ -65,7 +65,7 @@
   width: 80px;
   height: 3px;
   border-radius: 999px;
-  background: #fb7185; /* pink garis */
+  background: #fb7185;
 }
 
 /* ===== SEARCH BAR ===== */
@@ -118,7 +118,7 @@
 .content {
   margin-top: 6px;
   padding-bottom: 16px;
-  flex: 1; /* ambil ruang sisa */
+  flex: 1;
   overflow-y: auto;
 }
 
@@ -126,6 +126,7 @@
   font-size: 18px;
   font-weight: 600;
   margin: 10px 0 12px;
+  color: #111827;
 }
 
 /* ===== GRID PRODUK ===== */
@@ -143,6 +144,12 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.product-card:active {
+  transform: scale(0.98);
 }
 
 .product-image {
@@ -170,6 +177,7 @@
   font-size: 14px;
   margin: 0;
   font-weight: 600;
+  color: #111827;
 }
 
 .product-desc {
@@ -188,6 +196,7 @@
 .product-price {
   font-weight: 600;
   font-size: 13px;
+  color: #22c55e;
 }
 
 .add-btn {
@@ -203,11 +212,16 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-/* ===== BOTTOM NAV (DI DALAM PHONE) ===== */
+.add-btn:active {
+  transform: scale(0.9);
+}
+
+/* ===== BOTTOM NAV ===== */
 .bottom-nav {
-  margin-top: auto; /* dorong ke bawah phone-shell */
+  margin-top: auto;
   background: #ffffff;
   padding: 8px 24px 10px;
   display: flex;
@@ -227,6 +241,11 @@
   font-size: 11px;
   color: #6b7280;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
 }
 
 .nav-icon {
@@ -236,3 +255,150 @@
 .nav-item.active {
   color: #111827;
 }
+
+/* ===== HEADER ACTIONS ===== */
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cart-icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* ===== PRODUCT DETAIL PAGE ===== */
+.product-detail-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.back-btn, .wishlist-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #374151;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.product-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* ===== CART PAGE ===== */
+.cart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.search-btn, .delete-all-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* ===== ACCOUNT PAGE ===== */
+.account-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.account-header {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.time {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.header-placeholder {
+  width: 40px;
+}
+
+.account-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  text-align: center;
+}
+
+/* ===== SCROLLBAR ===== */
+.content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .app-root {
+    padding: 0;
+  }
+  
+  .phone-shell {
+    border-radius: 0;
+    min-height: 100vh;
+    max-width: 100%;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}  
