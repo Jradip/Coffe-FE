@@ -2,6 +2,7 @@
 import React from "react";
 import "./Cart.css";
 import { FaArrowLeft } from "react-icons/fa";
+import { FiSearch, FiTrash2 } from "react-icons/fi";
 import CartView from "./CartView";
 
 function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
@@ -15,13 +16,19 @@ function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
     <div className="cart-container">
       {/* HEADER */}
       <header className="cart-header">
-  <button type="button" className="back-btn" onClick={onBack}>
-    <FaArrowLeft />
-  </button>
-  <h1 className="cart-title">My Cart</h1>
-  {/* placeholder kosong biar judul tetap center */}
-  <div className="header-placeholder" />
-</header>
+        <button type="button" className="back-btn" onClick={onBack}>
+          <FaArrowLeft />
+        </button>
+        <h1 className="cart-title">My Cart</h1>
+        <div className="header-actions">
+          <button type="button" className="search-btn">
+            <FiSearch />
+          </button>
+          <button type="button" className="delete-all-btn">
+            <FiTrash2 />
+          </button>
+        </div>
+      </header>
 
       {/* LIST ITEM */}
       <section className="cart-items-section">

@@ -7,13 +7,12 @@ import { FaPlus, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineHome, MdHistory, MdOutlinePerson } from "react-icons/md";
 import { GiCoffeeCup } from "react-icons/gi";
+import Cart from "./components/Cart"; 
+import Account from "./components/Account"; // ⬅️ pakai Account eksternal
 
-import Cart from "./components/Cart";
-import Account from "./components/Account";
-
-// ============== PRODUCT DETAIL (di dalam App) ==============
+// ============== PRODUCT DETAIL ==============
 const ProductDetail = ({ item, onBack, onAddToCart }) => {
-  if (!item) return null;
+  if (!item) return null; // jaga-jaga
 
   return (
     <div className="product-detail-container">
@@ -27,18 +26,19 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
 
       <div className="content">
         <div className="product-detail-body">
-          {/* Gambar kopi */}
           <div className="detail-image-wrapper">
-            <img src={kopiImg} alt={item.name} className="detail-image" />
+            <img
+              src={kopiImg}
+              alt={item.name}
+              className="detail-image"
+            />
           </div>
 
-          {/* Nama & deskripsi singkat */}
           <div className="detail-main-info">
             <h2 className="detail-main-title">{item.name}</h2>
             <p className="detail-main-desc">{item.desc}</p>
           </div>
 
-          {/* Info dummy */}
           <div className="detail-meta-grid">
             <div>
               <p className="detail-meta-label">Roast</p>
@@ -58,7 +58,6 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
             </div>
           </div>
 
-          {/* Harga + ukuran */}
           <div className="detail-price-row">
             <div>
               <p className="detail-price-label">Harga</p>
@@ -69,7 +68,6 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
             <p className="detail-volume">Cup 350 ml</p>
           </div>
 
-          {/* Tombol Add To Cart */}
           <button
             type="button"
             className="detail-add-btn"
@@ -83,7 +81,7 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
   );
 };
 
-// ============== DATA DUMMY PRODUK ==============
+// ============== DATA DUMMY ==============
 const items = [
   {
     id: 1,
@@ -111,7 +109,7 @@ const items = [
   },
 ];
 
-// ============== ROOT APP =======================
+// ============== ROOT APP ==============
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -147,7 +145,7 @@ function App() {
         .map((item) =>
           item.id === id ? { ...item, qty: item.qty + delta } : item
         )
-        .filter((item) => item.qty > 0)
+        .filter((item) => item.qty > 0) // kalau qty 0, auto hilang
     );
   };
 
@@ -156,7 +154,6 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // pilih halaman yang dirender
   const renderPage = () => {
     switch (currentPage) {
       case "productDetail":
@@ -178,10 +175,8 @@ function App() {
           />
         );
       case "account":
-        // ⬅️ ini yang tadi kamu tanya posisinya
         return <Account onBack={() => setCurrentPage("home")} />;
       default:
-        // halaman HOME
         return (
           <>
             <header className="home-header">
@@ -245,7 +240,7 @@ function App() {
                         className="add-btn"
                         aria-label="Tambah ke keranjang"
                         onClick={(e) => {
-                          e.stopPropagation(); // jangan buka detail
+                          e.stopPropagation(); // biar gak buka detail
                           handleAddToCart(item);
                         }}
                       >
