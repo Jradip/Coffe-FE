@@ -212,3 +212,34 @@
     padding: 10px 12px;
   }
 }
+/* ===== LOGOUT BUTTON ===== */
+.logout-section {
+  margin-top: 24px;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 16px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.logout-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 8px rgba(239, 68, 68, 0.35);
+}
+
+.logout-icon {
+  font-size: 16px;
+}

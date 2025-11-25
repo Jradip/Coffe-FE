@@ -1,7 +1,14 @@
 // src/components/Account.jsx
 import React from "react";
 import "./Account.css";
-import { FaArrowLeft, FaWallet, FaTicketAlt, FaLock, FaChevronRight } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaWallet,
+  FaTicketAlt,
+  FaLock,
+  FaChevronRight,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 const Account = ({ onBack }) => {
   const user = {
@@ -11,7 +18,13 @@ const Account = ({ onBack }) => {
   };
 
   const saldo = 250000; // contoh saldo
-  const kupon = 3;       // contoh jumlah kupon
+  const kupon = 3; // contoh jumlah kupon
+
+  const handleLogout = () => {
+    // sementara hanya dummy, nanti bisa dihubungkan ke auth asli
+    // misalnya: clear token, redirect ke halaman login, dll.
+    alert("Logout berhasil (dummy). Silakan hubungkan ke logic auth Anda 🙂");
+  };
 
   return (
     <div className="account-container">
@@ -21,12 +34,13 @@ const Account = ({ onBack }) => {
           <button className="back-btn" onClick={onBack}>
             <FaArrowLeft />
           </button>
-          <div className="time">9:41</div>
-          <div className="header-placeholder" />
+          <span className="status-time">9:41</span>
+          <span className="header-placeholder" />
         </div>
         <h1 className="account-title">Account</h1>
       </header>
 
+      {/* KONTEN */}
       <main className="account-content">
         {/* PROFILE */}
         <section className="profile-section">
@@ -35,13 +49,13 @@ const Account = ({ onBack }) => {
               <img src={user.avatar} alt={user.name} className="avatar" />
             </div>
             <div className="profile-info">
-              <h2 className="user-name">{user.name}</h2>
+              <p className="user-name">{user.name}</p>
               <p className="user-email">{user.email}</p>
             </div>
           </div>
         </section>
 
-        {/* SALDO & KUPON */}
+        {/* SALDO + KUPON */}
         <section className="summary-section">
           <div className="summary-card">
             <div className="summary-icon">
@@ -78,7 +92,7 @@ const Account = ({ onBack }) => {
                 <FaLock />
               </div>
               <div className="menu-content">
-                <h3 className="menu-title">Ganti Password</h3>
+                <p className="menu-title">Ganti Password</p>
                 <p className="menu-description">
                   Ubah kata sandi akun Anda
                 </p>
@@ -87,6 +101,18 @@ const Account = ({ onBack }) => {
             <div className="menu-arrow">
               <FaChevronRight />
             </div>
+          </button>
+        </section>
+
+        {/* LOGOUT DI PALING BAWAH */}
+        <section className="logout-section">
+          <button
+            type="button"
+            className="logout-btn"
+            onClick={handleLogout}
+          >
+            <FaSignOutAlt className="logout-icon" />
+            <span>Logout</span>
           </button>
         </section>
       </main>
