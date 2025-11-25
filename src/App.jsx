@@ -10,6 +10,7 @@ import { GiCoffeeCup } from "react-icons/gi";
 
 import Cart from "./components/Cart";
 import Account from "./components/Account";
+import History from "./components/History"; // <-- added import
 
 // ============== PRODUCT DETAIL (di dalam App) ==============
 const ProductDetail = ({ item, onBack, onAddToCart }) => {
@@ -180,6 +181,9 @@ function App() {
       case "account":
         // ⬅️ ini yang tadi kamu tanya posisinya
         return <Account onBack={() => setCurrentPage("home")} />;
+      case "history":
+        // <-- render History page when currentPage === 'history'
+        return <History onBack={() => setCurrentPage("home")} />;
       default:
         // halaman HOME
         return (
@@ -276,7 +280,12 @@ function App() {
             <MdOutlineHome className="nav-icon" />
             <span className="nav-label">Home</span>
           </button>
-          <button className="nav-item">
+          <button
+            className={`nav-item ${
+              currentPage === "history" ? "active" : ""
+            }`}
+            onClick={() => setCurrentPage("history")} // <-- jump to history
+          >
             <MdHistory className="nav-icon" />
             <span className="nav-label">History</span>
           </button>
