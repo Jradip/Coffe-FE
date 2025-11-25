@@ -1,6 +1,19 @@
+/* ===== GLOBAL AGAR TINGGI PAS ===== */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f0f2f5;
+  overflow: hidden; /* yang scroll cuma .content di dalam frame */
+}
+
 /* ===== WRAPPER APLIKASI ===== */
 .app-root {
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -18,7 +31,7 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 24px);
+  height: 100%;              /* frame selalu setinggi viewport */
   overflow: hidden;
 }
 
@@ -117,7 +130,7 @@
 /* ===== KONTEN (SCROLL AREA) ===== */
 .content {
   margin-top: 6px;
-  padding-bottom: 16px;
+  padding-bottom: 90px;   /* ruang kosong di atas nav, biar konten tidak ketutup */
   flex: 1;
   overflow-y: auto;
 }
@@ -219,7 +232,7 @@
   transform: scale(0.9);
 }
 
-/* ===== BOTTOM NAV ===== */
+/* ===== BOTTOM NAV (KARTU, TAPI DI DALAM FRAME) ===== */
 .bottom-nav {
   margin-top: auto;
   background: #ffffff;
@@ -228,6 +241,7 @@
   justify-content: space-between;
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.1);
+  flex-shrink: 0;           /* supaya selalu nempel di bawah .phone-shell */
 }
 
 .nav-item {
@@ -391,8 +405,8 @@
   box-shadow: 0 3px 8px rgba(34, 197, 94, 0.4);
 }
 
-
-.back-btn, .wishlist-btn {
+.back-btn,
+.wishlist-btn {
   background: none;
   border: none;
   font-size: 20px;
@@ -424,7 +438,8 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
-.search-btn, .delete-all-btn {
+.search-btn,
+.delete-all-btn {
   background: none;
   border: none;
   font-size: 18px;
@@ -495,15 +510,15 @@
   .app-root {
     padding: 0;
   }
-  
+
   .phone-shell {
     border-radius: 0;
-    min-height: 100vh;
+    height: 100vh;
     max-width: 100%;
   }
-  
+
   .card-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-}  
+}
