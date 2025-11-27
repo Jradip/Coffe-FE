@@ -10,7 +10,8 @@ import { GiCoffeeCup } from "react-icons/gi";
 
 import Cart from "./components/Cart";
 import Account from "./components/Account";
-import History from "./components/History"; // <-- added import
+import History from "./components/History";
+import ChangePassword from "./components/ChangePassword"; // <-- added import
 
 // ============== PRODUCT DETAIL (di dalam App) ==============
 const ProductDetail = ({ item, onBack, onAddToCart }) => {
@@ -179,8 +180,18 @@ function App() {
           />
         );
       case "account":
-        // ⬅️ ini yang tadi kamu tanya posisinya
-        return <Account onBack={() => setCurrentPage("home")} />;
+        return (
+          <Account
+            onBack={() => setCurrentPage("home")}
+            onChangePassword={() => setCurrentPage("changePassword")}
+          />
+        );
+         case "changePassword":
+        return (
+          <ChangePassword
+            onBack={() => setCurrentPage("account")}
+          />
+        );
       case "history":
         // <-- render History page when currentPage === 'history'
         return <History onBack={() => setCurrentPage("home")} />;
@@ -290,11 +301,13 @@ function App() {
             <span className="nav-label">History</span>
           </button>
           <button
-            className={`nav-item ${
-              currentPage === "account" ? "active" : ""
-            }`}
-            onClick={() => setCurrentPage("account")}
-          >
+  className={`nav-item ${
+    currentPage === "account" || currentPage === "changePassword"
+      ? "active"
+      : ""
+  }`}
+  onClick={() => setCurrentPage("account")}
+>
             <MdOutlinePerson className="nav-icon" />
             <span className="nav-label">Akun</span>
           </button>

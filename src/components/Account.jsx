@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-const Account = ({ onBack }) => {
+ const Account = ({ onBack, onChangePassword }) => {
   const user = {
     name: "Afscr Hossen",
     email: "imshuvc97@gmail.com",
@@ -83,10 +83,10 @@ const Account = ({ onBack }) => {
         {/* GANTI PASSWORD */}
         <section className="menu-section">
           <button
-            type="button"
-            className="menu-item"
-            onClick={() => console.log("Ganti Password clicked")}
-          >
+  type="button"
+  className="menu-item"
+  onClick={onChangePassword}
+>
             <div className="menu-item-left">
               <div className="menu-icon">
                 <FaLock />

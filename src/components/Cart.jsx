@@ -3,6 +3,8 @@ import React from "react";
 import "./Cart.css";
 import { FaArrowLeft } from "react-icons/fa";
 import CartView from "./CartView";
+import { RiCoupon2Line } from "react-icons/ri";
+
 
 function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
   const total = items.reduce(
@@ -38,8 +40,22 @@ function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
         />
       </section>
 
-      {/* TOTAL SINGKAT */}
+      {/* TOTAL & KUPON */}
       <section className="pricing-section">
+        {/* Row Kupon */}
+        <div className="coupon-row">
+          <span className="coupon-label">Kupon</span>
+          <button
+  type="button"
+  className="coupon-btn"
+  onClick={() => alert("Fitur pilih kupon belum dihubungkan 🙂")}
+>
+  <RiCoupon2Line className="coupon-btn-icon" />
+  <span>Pilih Kupon</span>
+</button>
+        </div>
+
+        {/* Row Total */}
         <div className="pricing-row total">
           <span className="pricing-label">Total</span>
           <span className="pricing-value">
