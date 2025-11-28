@@ -6,11 +6,23 @@ import CartView from "./CartView";
 import { RiCoupon2Line } from "react-icons/ri";
 
 
-function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
+function Cart({
+  items = [],
+  onBack,
+  onIncrement,
+  onDecrement,
+  onRemove,
+  onOpenCoupon, 
+}) {
   const total = items.reduce(
     (sum, item) => sum + (item.price || 0) * (item.qty || 0),
     0
   );
+
+  const handleOpenCoupon = () => {
+    if (onOpenCoupon) onOpenCoupon(); 
+  };
+
   const itemCount = items.reduce((sum, item) => sum + (item.qty || 0), 0);
 
   return (
@@ -48,11 +60,12 @@ function Cart({ items = [], onBack, onIncrement, onDecrement, onRemove }) {
           <button
   type="button"
   className="coupon-btn"
-  onClick={() => alert("Fitur pilih kupon belum dihubungkan 🙂")}
+  onClick={handleOpenCoupon}
 >
   <RiCoupon2Line className="coupon-btn-icon" />
   <span>Pilih Kupon</span>
 </button>
+
         </div>
 
         {/* Row Total */}

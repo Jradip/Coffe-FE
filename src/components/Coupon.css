@@ -1,0 +1,149 @@
+/* ===== HALAMAN DAFTAR KUPON ===== */
+
+.coupon-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+/* HEADER */
+.coupon-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.coupon-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.coupon-back-btn {
+  border: none;
+  background: none;
+  padding: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.coupon-time {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.coupon-header-placeholder {
+  width: 24px;
+}
+
+.coupon-title {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* KONTEN (SCROLL AREA) */
+.coupon-content {
+  flex: 1;
+  padding: 16px 18px 90px; /* 90px utk ruang bottom nav */
+  overflow-y: auto;
+}
+
+/* SEARCH BAR */
+.coupon-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background-color: #f3f4f6;
+  margin-bottom: 16px;
+}
+
+.coupon-search-icon {
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+.coupon-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+}
+
+/* LIST KUPON */
+.coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.coupon-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.coupon-card-text {
+  flex: 1;
+}
+
+.coupon-card-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.coupon-card-desc {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* TOMBOL GUNAKAN */
+.coupon-use-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #22c55e;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+  white-space: nowrap;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.coupon-use-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
+}
+
+.coupon-use-icon {
+  font-size: 14px;
+}
+
+.coupon-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  text-align: center;
+  margin-top: 20px;
+}

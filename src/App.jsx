@@ -2,12 +2,11 @@
 import React, { useState } from "react";
 import "./App.css";
 import kopiImg from "./assets/kopi.png";
-
 import { FaPlus, FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineHome, MdHistory, MdOutlinePerson } from "react-icons/md";
 import { GiCoffeeCup } from "react-icons/gi";
-
+import Coupon from "./components/Coupon";
 import Cart from "./components/Cart";
 import Account from "./components/Account";
 import History from "./components/History";
@@ -170,13 +169,26 @@ function App() {
           />
         );
       case "cart":
+  return (
+    <Cart
+      items={cartItems}
+      onBack={() => setCurrentPage("home")}
+      onIncrement={(id) => handleUpdateQty(id, 1)}
+      onDecrement={(id) => handleUpdateQty(id, -1)}
+      onRemove={handleRemoveItem}
+      onOpenCoupon={() => setCurrentPage("coupon")}  
+    />
+  );
+
+        case "coupon":
         return (
-          <Cart
-            items={cartItems}
-            onBack={() => setCurrentPage("home")}
-            onIncrement={(id) => handleUpdateQty(id, 1)}
-            onDecrement={(id) => handleUpdateQty(id, -1)}
-            onRemove={handleRemoveItem}
+          <Coupon
+            onBack={() => setCurrentPage("cart")}
+            onUseCoupon={(coupon) => {
+              // nanti bisa isi logic penerapan kupon ke total
+              alert(`Kupon "${coupon.title}" digunakan (dummy)`);
+              setCurrentPage("cart");
+            }}
           />
         );
       case "account":
