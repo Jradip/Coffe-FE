@@ -1,122 +1,101 @@
+// src/components/History.jsx
 import React from "react";
 import "./History.css";
+import { FaArrowLeft } from "react-icons/fa";
+import { GiCoffeeCup } from "react-icons/gi";
 
-/**
- * Component History (standalone)
- * Props:
- *  - onBack: function to call when user presses back (optional)
- *  - orders: optional array of order objects (if not provided, component uses demo data)
- *
- * Order shape:
- *  {
- *    id: number|string,
- *    queue: number,
- *    status: "pending" | "completed" | string,
- *    items: [{ name: string, price: number }],
- *  }
- *
- * Note: image src uses a local uploaded file path:
- * "/mnt/data/8e3d10fe-e4c7-42be-b4d3-4cb2fa65f4d7.png"
- */
+// Dummy data awal (kalau belum ada order dari user)
+const dummyHistory = [
+  {
+    id: 1,
+    queueNumber: 56,
+    status: "pending",
+    items: [
+      { name: "Organic Bananas 1", qty: 1, price: 400000 },
+      { name: "Organic Bananas 1", qty: 1, price: 400000 },
+      { name: "Organic Bananas 1", qty: 1, price: 400000 },
+    ],
+  },
+];
 
-function formatIDR(n) {
-  if (typeof n !== "number") return n;
-  return "Rp. " + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+const formatRupiah = (value) =>
+  `Rp. ${value.toLocaleString("id-ID", { minimumFractionDigits: 0 })}`;
 
-export default function History({ onBack = () => {}, orders: propOrders = null }) {
-  // fallback demo data (used when parent doesn't pass orders)
-  const demoOrders = [
-    {
-      id: 1,
-      queue: 56,
-      status: "pending",
-      items: [
-        { name: "Organic Bananas 1", price: 400000 },
-        { name: "Organic Bananas 1", price: 400000 },
-        { name: "Organic Bananas 1", price: 400000 },
-      ],
-    },
-    {
-      id: 2,
-      queue: 57,
-      status: "pending",
-      items: [
-        { name: "Organic Bananas 1", price: 400000 },
-        { name: "Organic Bananas 1", price: 400000 },
-        { name: "Organic Bananas 1 with a longer name that wraps to multiple lines", price: 400000 },
-      ],
-    },
-    {
-      id: 3,
-      queue: 58,
-      status: "completed",
-      items: [
-        { name: "Organic Bananas 1", price: 400000 },
-      ],
-    },
-  ];
-
-  const orders = Array.isArray(propOrders) ? propOrders : demoOrders;
+const History = ({ onBack, orders = [] }) => {
+  // kalau ada data dari App, pakai itu; kalau belum, pakai dummy
+  const data = orders.length ? orders : dummyHistory;
 
   return (
-    <div className="history-page">
+    <div className="history-container">
+      {/* HEADER */}
       <header className="history-header">
-        <button className="back-btn" onClick={onBack} aria-label="Back">
-          ←
-        </button>
-
-        <div className="logo-and-title">
-          {/* Use the uploaded local image path as requested by you */}
-          <div className="logo-circle-small">
-            <img
-              src="/mnt/data/8e3d10fe-e4c7-42be-b4d3-4cb2fa65f4d7.png"
-              alt="Kedai Gen-Z"
-              className="logo-img-small"
-            />
-          </div>
-
-          <div className="brand-name">Kedai Gen-Z</div>
+        <div className="history-header-top">
+          <button className="history-back-btn" onClick={onBack}>
+            <FaArrowLeft />
+          </button>
+          <span className="history-time">9:41</span>
+          <span className="history-header-placeholder" />
         </div>
-
-        {/* placeholder right side keeps header balanced */}
-        <div style={{ width: 36 }} />
+        <h1 className="history-title">History</h1>
       </header>
 
-      <main className="history-content" role="main">
-        {orders.map((o) => {
-          const total = o.items.reduce((s, it) => s + (typeof it.price === "number" ? it.price : 0), 0);
+      {/* KONTEN */}
+      <main className="history-content">
+        {/* Logo + brand */}
+        <div className="history-brand">
+          <div className="history-logo-circle">
+            <GiCoffeeCup className="history-logo-icon" />
+          </div>
+          <p className="history-brand-name">Kedai Gen-Z</p>
+        </div>
 
-          return (
-            <article className="order-card" key={o.id} aria-label={`Order ${o.id}`}>
-              <div className="order-top">
-                <div className="queue">
-                  Antrian : <strong>{o.queue}</strong>
-                </div>
-                <div className={`status-badge ${o.status === "pending" ? "pending" : "completed"}`}>
-                  {o.status}
-                </div>
-              </div>
+        {/* LIST HISTORY */}
+        <section className="history-list">
+          {data.map((order) => {
+            const total =
+              order.total ??
+              order.items.reduce((sum, item) => sum + (item.price || 0), 0);
 
-              <div className="order-items">
-                {o.items.map((it, idx) => (
-                  <div className="order-item" key={idx}>
-                    <div className="item-name">{it.name}</div>
-                    <div className="item-price">
-                      {typeof it.price === "number" ? formatIDR(it.price) : it.price}
+            return (
+              <article key={order.id} className="history-card">
+                <div className="history-card-header">
+                  <span className="history-queue">
+                    Antrian : {order.queueNumber}
+                  </span>
+                  <span
+                    className={`history-status history-status-${order.status}`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+
+                <div className="history-items">
+                  {order.items.map((item, idx) => (
+                    <div key={idx} className="history-item-row">
+                      <span className="history-item-name">
+                        {item.name}
+                        {item.qty > 1 ? ` x${item.qty}` : ""}
+                      </span>
+                      <span className="history-item-price">
+                        {formatRupiah(item.price || 0)}
+                      </span>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <div className="order-footer">
-                <div className="total-label">Total :</div>
-                <div className="total-value">{formatIDR(total)}</div>
-              </div>
-            </article>
-          );
-        })}
+                <div className="history-total-row">
+                  <span className="history-total-label">Total :</span>
+                  <span className="history-total-value">
+                    {formatRupiah(total)}
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+        </section>
       </main>
     </div>
   );
-}
+};
+
+export default History;

@@ -2,15 +2,21 @@
 import React, { useState } from "react";
 import "./App.css";
 import kopiImg from "./assets/kopi.png";
-import { FaPlus, FaShoppingCart } from "react-icons/fa";
+import { FaPlus, FaShoppingCart, FaArrowLeft } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineHome, MdHistory, MdOutlinePerson } from "react-icons/md";
 import { GiCoffeeCup } from "react-icons/gi";
+
 import Coupon from "./components/Coupon";
 import Cart from "./components/Cart";
 import Account from "./components/Account";
 import History from "./components/History";
-import ChangePassword from "./components/ChangePassword"; // <-- added import
+import LoginScreen from "./components/LoginScreen";
+import ChangePassword from "./components/ChangePassword";
+import RegisterScreen from "./components/RegisterScreen";
+import VerificationScreen from "./components/VerificationScreen";
+import ScanTable from "./components/ScanTable";
+import OrderSuccess from "./components/OrderSuccess";
 
 // ============== PRODUCT DETAIL (di dalam App) ==============
 const ProductDetail = ({ item, onBack, onAddToCart }) => {
@@ -20,12 +26,11 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
     <div className="product-detail-container">
       <header className="product-header">
         <button className="back-btn" onClick={onBack}>
-          ←
+          <FaArrowLeft />
         </button>
         <h1 className="product-title">Product Detail</h1>
         <button className="wishlist-btn">♡</button>
       </header>
-
       <div className="content">
         <div className="product-detail-body">
           {/* Gambar kopi */}
@@ -114,9 +119,34 @@ const items = [
 
 // ============== ROOT APP =======================
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [currentPage, setCurrentPage] = useState("login");
   const [selectedItem, setSelectedItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [historyOrders, setHistoryOrders] = useState([]);
+
+  // simpan order ke history & kosongkan cart
+  const handleTrackOrder = () => {
+    if (!cartItems.length) {
+      setCurrentPage("history");
+      return;
+    }
+
+    const newOrder = {
+      id: Date.now(),
+      queueNumber: 56 + historyOrders.length, // contoh nomor antrian
+      status: "pending",
+      items: cartItems.map((item) => ({
+        name: item.name,
+        qty: item.qty,
+        // harga per baris (qty x harga)
+        price: (item.price || 0) * (item.qty || 0),
+      })),
+    };
+
+    setHistoryOrders((prev) => [...prev, newOrder]);
+    setCartItems([]);
+    setCurrentPage("history");
+  };
 
   // buka halaman detail dari home
   const handleOpenDetail = (item) => {
@@ -160,6 +190,32 @@ function App() {
   // pilih halaman yang dirender
   const renderPage = () => {
     switch (currentPage) {
+      // ====== AUTH PAGES ======
+      case "login":
+        return (
+          <LoginScreen
+            onLogin={() => setCurrentPage("verify")}
+            onGoRegister={() => setCurrentPage("register")}
+          />
+        );
+
+      case "register":
+        return (
+          <RegisterScreen
+            onBack={() => setCurrentPage("login")}
+            onRegistered={() => setCurrentPage("verify")}
+          />
+        );
+
+      case "verify":
+        return (
+          <VerificationScreen
+            onBack={() => setCurrentPage("login")}
+            onVerified={() => setCurrentPage("home")}
+          />
+        );
+
+      // ====== PAGE LAIN ======
       case "productDetail":
         return (
           <ProductDetail
@@ -168,45 +224,75 @@ function App() {
             onAddToCart={handleAddToCart}
           />
         );
-      case "cart":
-  return (
-    <Cart
-      items={cartItems}
-      onBack={() => setCurrentPage("home")}
-      onIncrement={(id) => handleUpdateQty(id, 1)}
-      onDecrement={(id) => handleUpdateQty(id, -1)}
-      onRemove={handleRemoveItem}
-      onOpenCoupon={() => setCurrentPage("coupon")}  
-    />
-  );
 
-        case "coupon":
+      case "cart":
+        return (
+          <Cart
+            items={cartItems}
+            onBack={() => setCurrentPage("home")}
+            onIncrement={(id) => handleUpdateQty(id, 1)}
+            onDecrement={(id) => handleUpdateQty(id, -1)}
+            onRemove={handleRemoveItem}
+            onOpenCoupon={() => setCurrentPage("coupon")}
+            onScanTable={() => setCurrentPage("scanTable")}
+            onPay={() => setCurrentPage("orderSuccess")}
+          />
+        );
+
+      case "scanTable":
+        return (
+          <ScanTable
+            onBack={() => setCurrentPage("cart")}
+            onConfirm={() => {
+              // nanti bisa dihubungkan ke backend, untuk sekarang balik ke cart saja
+              setCurrentPage("cart");
+            }}
+          />
+        );
+
+      case "coupon":
         return (
           <Coupon
             onBack={() => setCurrentPage("cart")}
             onUseCoupon={(coupon) => {
-              // nanti bisa isi logic penerapan kupon ke total
               alert(`Kupon "${coupon.title}" digunakan (dummy)`);
               setCurrentPage("cart");
             }}
           />
         );
+
+      case "orderSuccess":
+        return (
+          <OrderSuccess
+            onTrackOrder={handleTrackOrder}
+            onBackHome={() => setCurrentPage("home")}
+          />
+        );
+
       case "account":
         return (
           <Account
             onBack={() => setCurrentPage("home")}
             onChangePassword={() => setCurrentPage("changePassword")}
+            onLogout={() => {
+              setCurrentPage("login");
+            }}
           />
         );
-         case "changePassword":
+
+      case "changePassword":
         return (
-          <ChangePassword
-            onBack={() => setCurrentPage("account")}
+          <ChangePassword onBack={() => setCurrentPage("account")} />
+        );
+
+      case "history":
+        return (
+          <History
+            onBack={() => setCurrentPage("home")}
+            orders={historyOrders}
           />
         );
-      case "history":
-        // <-- render History page when currentPage === 'history'
-        return <History onBack={() => setCurrentPage("home")} />;
+
       default:
         // halaman HOME
         return (
@@ -288,42 +374,45 @@ function App() {
     }
   };
 
+  const authPages = ["login", "register", "verify"];
+  const isAuthPage = authPages.includes(currentPage);
+
   return (
     <div className="app-root">
       <div className="phone-shell">
         {renderPage()}
 
-        <nav className="bottom-nav">
-          <button
-            className={`nav-item ${
-              currentPage === "home" ? "active" : ""
-            }`}
-            onClick={() => setCurrentPage("home")}
-          >
-            <MdOutlineHome className="nav-icon" />
-            <span className="nav-label">Home</span>
-          </button>
-          <button
-            className={`nav-item ${
-              currentPage === "history" ? "active" : ""
-            }`}
-            onClick={() => setCurrentPage("history")} // <-- jump to history
-          >
-            <MdHistory className="nav-icon" />
-            <span className="nav-label">History</span>
-          </button>
-          <button
-  className={`nav-item ${
-    currentPage === "account" || currentPage === "changePassword"
-      ? "active"
-      : ""
-  }`}
-  onClick={() => setCurrentPage("account")}
->
-            <MdOutlinePerson className="nav-icon" />
-            <span className="nav-label">Akun</span>
-          </button>
-        </nav>
+        {!isAuthPage && (
+          <nav className="bottom-nav">
+            <button
+              className={`nav-item ${
+                currentPage === "home" ? "active" : ""
+              }`}
+              onClick={() => setCurrentPage("home")}
+            >
+              <MdOutlineHome className="nav-icon" />
+              <span className="nav-label">Home</span>
+            </button>
+            <button
+              className={`nav-item ${
+                currentPage === "history" ? "active" : ""
+              }`}
+              onClick={() => setCurrentPage("history")}
+            >
+              <MdHistory className="nav-icon" />
+              <span className="nav-label">History</span>
+            </button>
+            <button
+              className={`nav-item ${
+                currentPage === "account" ? "active" : ""
+              }`}
+              onClick={() => setCurrentPage("account")}
+            >
+              <MdOutlinePerson className="nav-icon" />
+              <span className="nav-label">Akun</span>
+            </button>
+          </nav>
+        )}
       </div>
     </div>
   );

@@ -12,7 +12,9 @@ function Cart({
   onIncrement,
   onDecrement,
   onRemove,
-  onOpenCoupon, 
+  onOpenCoupon,
+  onScanTable,   
+  onPay,
 }) {
   const total = items.reduce(
     (sum, item) => sum + (item.price || 0) * (item.qty || 0),
@@ -21,6 +23,14 @@ function Cart({
 
   const handleOpenCoupon = () => {
     if (onOpenCoupon) onOpenCoupon(); 
+  };
+
+    const handleScanTable = () => {
+    if (onScanTable) onScanTable();
+  };
+
+   const handlePay = () => {
+    if (onPay) onPay();
   };
 
   const itemCount = items.reduce((sum, item) => sum + (item.qty || 0), 0);
@@ -78,12 +88,25 @@ function Cart({
       </section>
 
       {/* TOMBBOL SCAN MEJA */}
-      <div className="checkout-section">
-        <button type="button" className="checkout-btn">
+            <section className="checkout-section">
+        <button
+          type="button"
+          className="checkout-btn"
+          onClick={handleScanTable}
+        >
           Scan Meja
         </button>
+
+        <button
+          type="button"
+          className="pay-btn"
+          onClick={handlePay}
+        >
+          Pembayaran
+        </button>
+      </section>
+
       </div>
-    </div>
   );
 }
 

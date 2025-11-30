@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
- const Account = ({ onBack, onChangePassword }) => {
+ const Account = ({ onBack, onChangePassword, onLogout }) => {
   const user = {
     name: "Afscr Hossen",
     email: "imshuvc97@gmail.com",
@@ -21,9 +21,7 @@ import {
   const kupon = 3; // contoh jumlah kupon
 
   const handleLogout = () => {
-    // sementara hanya dummy, nanti bisa dihubungkan ke auth asli
-    // misalnya: clear token, redirect ke halaman login, dll.
-    alert("Logout berhasil (dummy). Silakan hubungkan ke logic auth Anda 🙂");
+   if (onLogout) onLogout(); 
   };
 
   return (

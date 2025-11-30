@@ -30,14 +30,13 @@ const ProductDetail = () => {
     <div className="product-detail-container">
       {/* Header */}
       <header className="product-header">
-        <button className="back-btn">
-          <FaArrowLeft />
-        </button>
-        <h1 className="product-title">Product Detail</h1>
-        <button className="wishlist-btn">
-          <FaHeart />
-        </button>
-      </header>
+  <button className="back-btn" onClick={onBack}>
+    <FaArrowLeft />
+  </button>
+  <h1 className="product-title">Product Detail</h1>
+  <button className="wishlist-btn">♡</button>
+</header>
+
 
       {/* Product Image */}
       <div className="product-image-section">

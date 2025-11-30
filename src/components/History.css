@@ -1,192 +1,179 @@
-/* Colors & tokens */
-:root {
-  --bg: #f5f7fb;
-  --card: #ffffff;
-  --muted: #6b7280;
-  --accent: #2abf7e;
-  --border: #e6edf1;
-  --text: #111827;
-  --shadow: rgba(15,23,42,0.06);
-}
-
-/* Page container (mobile centered) */
-.history-page {
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  background: transparent;
-  min-height: 100vh;
+/* ===== CONTAINER HALAMAN HISTORY ===== */
+.history-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  padding-bottom: 92px; /* space for bottom nav if present */
+  background-color: #ffffff;
 }
 
-/* Header */
+/* HEADER ATAS */
 .history-header {
-  height: 92px;
+  padding: 16px 18px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.history-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.history-back-btn {
+  border: none;
+  background: none;
+  padding: 4px;
+  font-size: 18px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  position: sticky;
-  top: 0;
-  background: transparent;
-  z-index: 10;
 }
 
-/* back button */
-.back-btn {
-  background: transparent;
-  border: 0;
+.history-time {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.history-header-placeholder {
+  width: 24px;
+}
+
+.history-title {
+  margin: 0;
+  text-align: center;
   font-size: 18px;
-  padding: 8px;
-  cursor: pointer;
-  color: var(--muted);
+  font-weight: 600;
+  color: #111827;
 }
 
-/* logo + title stack */
-.logo-and-title {
+/* KONTEN (SCROLL) */
+.history-content {
+  flex: 1;
+  padding: 16px 18px 90px; /* padding-bottom utk ruang bottom-nav */
+  overflow-y: auto;
+}
+
+/* LOGO + BRAND */
+.history-brand {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  margin-bottom: 18px;
 }
 
-/* round logo */
-.logo-circle-small {
-  width: 64px;
-  height: 64px;
+.history-logo-circle {
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
-  overflow: hidden;
+  background: #ecfdf3;
+  border: 1px solid #22c55e33;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--card);
-  box-shadow: 0 8px 20px var(--shadow);
+  margin-bottom: 6px;
 }
 
-/* small image inside logo */
-.logo-img-small {
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
+.history-logo-icon {
+  font-size: 26px;
+  color: #22c55e;
 }
 
-/* brand title */
-.brand-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text);
+.history-brand-name {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
 }
 
-/* Main content area */
-.history-content {
-  padding: 12px 16px 24px 16px;
+/* LIST HISTORY */
+.history-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: transparent;
 }
 
-/* Order card */
-.order-card {
-  background: var(--card);
-  padding: 14px;
+/* CARD PESANAN */
+.history-card {
+  padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 24px var(--shadow);
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 
-/* top row inside card */
-.order-top {
+/* row atas: antrian + status */
+.history-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-/* queue text */
-.queue {
-  color: var(--muted);
+.history-queue {
   font-size: 13px;
+  font-weight: 600;
+  color: #111827;
 }
 
-/* status badge */
-.status-badge {
-  padding: 6px 10px;
-  border-radius: 999px;
+.history-status {
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: #f3f4f6;
+  color: #6b7280;
 }
 
-/* pending/completed styles */
-.status-badge.pending {
-  background: #fff7ed;
-  color: #92400e;
-  border: 1px solid #fde3c1;
-}
-.status-badge.completed {
-  background: #ecfdf5;
-  color: #065f46;
-  border: 1px solid #d1fae5;
+.history-status-pending {
+  background-color: #fef3c7;
+  color: #b45309;
 }
 
-/* order items list */
-.order-items {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 10px;
+.history-status-done {
+  background-color: #dcfce7;
+  color: #15803d;
 }
 
-/* single item row: two columns (name | price) */
-.order-item {
+/* daftar item */
+.history-items {
+  margin-bottom: 8px;
+}
+
+.history-item-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  font-size: 12px;
+  color: #4b5563;
 }
 
-/* name should wrap if long */
-.item-name {
-  flex: 1;
-  font-size: 14px;
-  color: var(--text);
-  word-break: break-word;
+.history-item-name {
+  max-width: 70%;
 }
 
-/* price aligned right, no wrap */
-.item-price {
-  color: var(--muted);
-  font-size: 13px;
+.history-item-price {
   white-space: nowrap;
 }
 
-/* footer showing total aligned to right */
-.order-footer {
+/* TOTAL */
+.history-total-row {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  border-top: 1px dashed var(--border);
-  padding-top: 10px;
-}
-
-.total-label {
-  color: var(--muted);
+  gap: 4px;
   font-size: 13px;
+  margin-top: 4px;
 }
 
-.total-value {
+.history-total-label {
+  color: #111827;
+}
+
+.history-total-value {
   font-weight: 700;
-  color: var(--text);
+  color: #111827;
 }
 
-/* Small screen tweaks */
-@media (max-width: 420px) {
-  .history-page { padding-left: 8px; padding-right: 8px; }
-  .logo-circle-small { width: 56px; height: 56px; }
-  .logo-img-small { width: 44px; height: 44px; }
+/* RESPONSIVE KECIL */
+@media (max-width: 480px) {
+  .history-content {
+    padding-inline: 14px;
+  }
 }
