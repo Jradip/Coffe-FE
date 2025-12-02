@@ -1,0 +1,128 @@
+.incentive-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.incentive-header {
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.incentive-back-btn {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: #111827;
+  cursor: pointer;
+}
+
+.incentive-main {
+  padding: 6px 0 20px;
+}
+
+.incentive-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.15);
+}
+
+/* header card */
+.incentive-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.incentive-medal {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: #e5f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+.incentive-header-text {
+  flex: 1;
+}
+
+.incentive-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.incentive-title {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.incentive-info-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.incentive-points-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.incentive-points {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.incentive-points-unit {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* tiers */
+.incentive-tier-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.incentive-tier-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.incentive-tier-icon {
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+.incentive-tier-icon.bronze {
+  color: #b36b2f;
+}
+
+.incentive-tier-icon.silver {
+  color: #9ca3af;
+}
+
+.incentive-tier-icon.gold {
+  color: #f59e0b;
+}
+
+.incentive-tier-name {
+  font-size: 14px;
+  color: #111827;
+}
+
+.incentive-tier-value {
+  font-size: 13px;
+  color: #4b5563;
+}

@@ -1,119 +1,88 @@
 // src/components/Account.jsx
 import React from "react";
 import "./Account.css";
-import {
-  FaArrowLeft,
-  FaWallet,
-  FaTicketAlt,
-  FaLock,
-  FaChevronRight,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { MdOutlineAttachMoney } from "react-icons/md";
+import { RiCoupon2Line, RiLockPasswordLine } from "react-icons/ri";
+import { FiLogOut } from "react-icons/fi";
 
- const Account = ({ onBack, onChangePassword, onLogout }) => {
+const Account = ({
+  onChangePassword,
+  onLogout,
+  onOpenIncentive,   // ✅ baru
+  onOpenPromo,       // ✅ baru
+}) => {
   const user = {
-    name: "Afscr Hossen",
-    email: "imshuvc97@gmail.com",
-    avatar: "/api/placeholder/80/80",
-  };
-
-  const saldo = 250000; // contoh saldo
-  const kupon = 3; // contoh jumlah kupon
-
-  const handleLogout = () => {
-   if (onLogout) onLogout(); 
+    name: "Afsar Hossen",
+    email: "imshuvo97@gmail.com",
   };
 
   return (
-    <div className="account-container">
-      {/* HEADER */}
-      <header className="account-header">
-        <div className="header-top">
-          <button className="back-btn" onClick={onBack}>
-            <FaArrowLeft />
-          </button>
-          <span className="status-time">9:41</span>
-          <span className="header-placeholder" />
+    <div className="account-page">
+      {/* PROFILE */}
+      <section className="account-profile">
+        <div className="profile-avatar">
+          <span className="profile-initial">
+            {user.name?.charAt(0) || "U"}
+          </span>
         </div>
-        <h1 className="account-title">Account</h1>
-      </header>
+        <div className="profile-info">
+          <div className="profile-name">{user.name}</div>
+          <div className="profile-email">{user.email}</div>
+        </div>
+      </section>
 
-      {/* KONTEN */}
-      <main className="account-content">
-        {/* PROFILE */}
-        <section className="profile-section">
-          <div className="profile-card">
-            <div className="avatar-container">
-              <img src={user.avatar} alt={user.name} className="avatar" />
-            </div>
-            <div className="profile-info">
-              <p className="user-name">{user.name}</p>
-              <p className="user-email">{user.email}</p>
-            </div>
+      {/* LIST MENU */}
+      <section className="account-list">
+        {/* INSENTIF */}
+        <button
+          type="button"
+          className="account-item"
+          onClick={onOpenIncentive}      // ✅ klik → buka halaman insentif
+        >
+          <div className="item-left">
+            <MdOutlineAttachMoney className="item-icon" />
+            <span>Insentif</span>
           </div>
-        </section>
+          <span className="item-arrow">›</span>
+        </button>
 
-        {/* SALDO + KUPON */}
-        <section className="summary-section">
-          <div className="summary-card">
-            <div className="summary-icon">
-              <FaWallet />
-            </div>
-            <div>
-              <p className="summary-label">Saldo</p>
-              <p className="summary-value">
-                Rp {saldo.toLocaleString("id-ID")}
-              </p>
-            </div>
+        {/* PROMO CARD → COUPON */}
+        <button
+          type="button"
+          className="account-item"
+          onClick={onOpenPromo}          // ✅ klik → buka halaman kupon
+        >
+          <div className="item-left">
+            <RiCoupon2Line className="item-icon" />
+            <span>Promo Card</span>
           </div>
+          <span className="item-arrow">›</span>
+        </button>
 
-          <div className="summary-card">
-            <div className="summary-icon">
-              <FaTicketAlt />
-            </div>
-            <div>
-              <p className="summary-label">Kupon</p>
-              <p className="summary-value">{kupon} Kupon</p>
-            </div>
+        <button
+          type="button"
+          className="account-item"
+          onClick={onChangePassword}
+        >
+          <div className="item-left">
+            <RiLockPasswordLine className="item-icon" />
+            <span>Ganti Password</span>
           </div>
-        </section>
+          <span className="item-arrow">›</span>
+        </button>
+      </section>
 
-        {/* GANTI PASSWORD */}
-        <section className="menu-section">
-          <button
-  type="button"
-  className="menu-item"
-  onClick={onChangePassword}
->
-            <div className="menu-item-left">
-              <div className="menu-icon">
-                <FaLock />
-              </div>
-              <div className="menu-content">
-                <p className="menu-title">Ganti Password</p>
-                <p className="menu-description">
-                  Ubah kata sandi akun Anda
-                </p>
-              </div>
-            </div>
-            <div className="menu-arrow">
-              <FaChevronRight />
-            </div>
-          </button>
-        </section>
-
-        {/* LOGOUT DI PALING BAWAH */}
-        <section className="logout-section">
-          <button
-            type="button"
-            className="logout-btn"
-            onClick={handleLogout}
-          >
-            <FaSignOutAlt className="logout-icon" />
-            <span>Logout</span>
-          </button>
-        </section>
-      </main>
+      {/* LOGOUT BUTTON */}
+      <div className="account-logout-wrapper">
+        <button
+          type="button"
+          className="logout-btn"
+          onClick={onLogout}
+        >
+          <FiLogOut className="logout-icon" />
+          <span>Log Out</span>
+        </button>
+      </div>
     </div>
   );
 };

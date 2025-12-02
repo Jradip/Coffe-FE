@@ -1,12 +1,13 @@
 // src/App.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
+
 import kopiImg from "./assets/kopi.png";
+
 import { FaPlus, FaShoppingCart, FaArrowLeft } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { MdOutlineHome, MdHistory, MdOutlinePerson } from "react-icons/md";
 import { GiCoffeeCup } from "react-icons/gi";
-
 import Coupon from "./components/Coupon";
 import Cart from "./components/Cart";
 import Account from "./components/Account";
@@ -17,6 +18,8 @@ import RegisterScreen from "./components/RegisterScreen";
 import VerificationScreen from "./components/VerificationScreen";
 import ScanTable from "./components/ScanTable";
 import OrderSuccess from "./components/OrderSuccess";
+import Incentive from "./components/Incentive";
+
 
 // ============== PRODUCT DETAIL (di dalam App) ==============
 const ProductDetail = ({ item, onBack, onAddToCart }) => {
@@ -24,13 +27,7 @@ const ProductDetail = ({ item, onBack, onAddToCart }) => {
 
   return (
     <div className="product-detail-container">
-      <header className="product-header">
-        <button className="back-btn" onClick={onBack}>
-          <FaArrowLeft />
-        </button>
-        <h1 className="product-title">Product Detail</h1>
-        <button className="wishlist-btn">♡</button>
-      </header>
+      {/* header sengaja dikosongkan (tidak ada back, tidak ada title) */}
       <div className="content">
         <div className="product-detail-body">
           {/* Gambar kopi */}
@@ -117,36 +114,38 @@ const items = [
   },
 ];
 
+// helper ambil page awal dari URL ?page=
+const getInitialPage = () => {
+  if (typeof window === "undefined") return "login";
+  const params = new URLSearchParams(window.location.search);
+  return params.get("page") || "login";
+};
+
 // ============== ROOT APP =======================
 function App() {
-  const [currentPage, setCurrentPage] = useState("login");
+  const [currentPage, setCurrentPage] = useState(getInitialPage);
   const [selectedItem, setSelectedItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [historyOrders, setHistoryOrders] = useState([]);
 
-  // simpan order ke history & kosongkan cart
-  const handleTrackOrder = () => {
-    if (!cartItems.length) {
-      setCurrentPage("history");
-      return;
-    }
+  // sinkron currentPage -> URL ?page=
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", currentPage);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, "", newUrl);
+  }, [currentPage]);
 
-    const newOrder = {
-      id: Date.now(),
-      queueNumber: 56 + historyOrders.length, // contoh nomor antrian
-      status: "pending",
-      items: cartItems.map((item) => ({
-        name: item.name,
-        qty: item.qty,
-        // harga per baris (qty x harga)
-        price: (item.price || 0) * (item.qty || 0),
-      })),
+  // sinkron tombol back browser -> currentPage
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const page = params.get("page") || "login";
+      setCurrentPage(page);
     };
-
-    setHistoryOrders((prev) => [...prev, newOrder]);
-    setCartItems([]);
-    setCurrentPage("history");
-  };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   // buka halaman detail dari home
   const handleOpenDetail = (item) => {
@@ -185,6 +184,31 @@ function App() {
   // hapus item
   const handleRemoveItem = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // ketika user klik "Track Order" di halaman sukses
+  const handleTrackOrder = () => {
+    if (!cartItems.length) {
+      setCurrentPage("history");
+      return;
+    }
+
+    setHistoryOrders((prev) => {
+      const newOrder = {
+        id: Date.now(),
+        queueNumber: 56 + prev.length, // contoh antrian mulai 56
+        status: "pending",
+        items: cartItems.map((item) => ({
+          name: item.name,
+          qty: item.qty,
+          price: (item.price || 0) * (item.qty || 0),
+        })),
+      };
+      return [...prev, newOrder];
+    });
+
+    setCartItems([]);
+    setCurrentPage("history");
   };
 
   // pilih halaman yang dirender
@@ -244,7 +268,7 @@ function App() {
           <ScanTable
             onBack={() => setCurrentPage("cart")}
             onConfirm={() => {
-              // nanti bisa dihubungkan ke backend, untuk sekarang balik ke cart saja
+              // nanti bisa dihubungkan ke backend
               setCurrentPage("cart");
             }}
           />
@@ -270,15 +294,21 @@ function App() {
         );
 
       case "account":
-        return (
-          <Account
-            onBack={() => setCurrentPage("home")}
-            onChangePassword={() => setCurrentPage("changePassword")}
-            onLogout={() => {
-              setCurrentPage("login");
-            }}
-          />
-        );
+  return (
+    <Account
+      onChangePassword={() => setCurrentPage("changePassword")}
+      onLogout={() => {
+        setCartItems([]);
+        setSelectedItem(null);
+        setCurrentPage("login");
+      }}
+      onOpenIncentive={() => setCurrentPage("incentive")} // ✅
+      onOpenPromo={() => setCurrentPage("coupon")}        // ✅
+    />
+  );
+
+  case "incentive":                             // 👈 tambah di sini
+      return <Incentive onBack={() => setCurrentPage("account")} />;
 
       case "changePassword":
         return (
@@ -293,8 +323,9 @@ function App() {
           />
         );
 
+      // ====== DEFAULT: HOME ======
+            // ====== DEFAULT: HOME ======
       default:
-        // halaman HOME
         return (
           <>
             <header className="home-header">
@@ -305,14 +336,7 @@ function App() {
                 <span className="brand-name">Kedai Gen-Z</span>
               </div>
               <div className="brand-underline" />
-              <div className="header-actions">
-                <button
-                  className="cart-icon-btn"
-                  onClick={() => setCurrentPage("cart")}
-                >
-                  <FaShoppingCart />
-                </button>
-              </div>
+              {/* header-actions DIHAPUS dari sini */}
             </header>
 
             <div className="search-row">
@@ -358,7 +382,7 @@ function App() {
                         className="add-btn"
                         aria-label="Tambah ke keranjang"
                         onClick={(e) => {
-                          e.stopPropagation(); // jangan buka detail
+                          e.stopPropagation();
                           handleAddToCart(item);
                         }}
                       >
@@ -369,8 +393,19 @@ function App() {
                 ))}
               </div>
             </main>
+
+            {/* CART MENGAMBANG DI BAWAH KANAN */}
+            <div className="floating-cart">
+              <button
+                className="cart-icon-btn"
+                onClick={() => setCurrentPage("cart")}
+              >
+                <FaShoppingCart />
+              </button>
+            </div>
           </>
         );
+
     }
   };
 
@@ -393,6 +428,7 @@ function App() {
               <MdOutlineHome className="nav-icon" />
               <span className="nav-label">Home</span>
             </button>
+
             <button
               className={`nav-item ${
                 currentPage === "history" ? "active" : ""
@@ -402,6 +438,7 @@ function App() {
               <MdHistory className="nav-icon" />
               <span className="nav-label">History</span>
             </button>
+
             <button
               className={`nav-item ${
                 currentPage === "account" ? "active" : ""

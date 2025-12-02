@@ -12,22 +12,24 @@
   border-bottom: 1px solid #f3f4f6;
 }
 
-.history-header-top {
+
+.history-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  justify-content: flex-start; /* cukup kiri saja */
+  padding: 12px 12px 8px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
 }
 
 .history-back-btn {
   border: none;
-  background: none;
-  padding: 4px;
+  background: transparent;
   font-size: 18px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
 }
+
+
 
 .history-time {
   font-size: 14px;
